@@ -41,8 +41,9 @@ def csv_to_df(absolute_path:str) -> pd.DataFrame:
 
 def feature_engineering_string_extraction(df:pd.DataFrame, target_col:str, new_col:str, delimiter:str = " ", position:int = 0) -> pd.DataFrame:
     '''
-    Extracts string elements from a specified column in a Dataframe based on a delimiter
-    and the position of the element within the cell's string value.
+    Extracts string elements from a specified column wtihin a Dataframe. The extracted string is based on parameters
+    delimiter and position. The delimiter and position will map the string within the column and extract its string value.
+    The extracted string value will be the row values of the newly generated column specified with new_col parameter.
 
     Parameters
     :df:(pd.DataFrame): The Dataframe containing the data.
