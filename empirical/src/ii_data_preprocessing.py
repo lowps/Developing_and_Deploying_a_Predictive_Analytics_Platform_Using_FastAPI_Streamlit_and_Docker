@@ -191,7 +191,9 @@ def truncate_column_values(df:pd.DataFrame, start:int, stop:int, *target_col:str
 
 def save_processed_data_to_csv(df, absolute_path):
     '''
-    Converts a pandas DataFrame into a CSV file and stores it at the specified absolute path.
+    Converts a pandas DataFrame into a CSV file and stores it at the specified absolute path. The name of the newly generated
+    CSV file is the last element of the absolute path. 
+    ex: '/Users/bobs_laptop/Desktop/.../generated_file_name.CSV'
 
     Parameters:
     :df:(pd.DataFrame): The pandas DataFrame that will be converted into a CSV file.
@@ -205,6 +207,64 @@ def save_processed_data_to_csv(df, absolute_path):
         inspector_gadget.get_log().info("save_processed_data_to_csv() successful")
     except Exception as e:
         inspector_gadget.get_log().error(f"save_processed_data_to_csv() unsuccessful, {e}")
+
+
+
+def convert_currency(df, price_column, conversion_rate= 0):
+    """
+    Converts the Price column from one currency to another using a specified conversion rate.
+
+    Parameters:
+    :df:(pd.DataFrame): DataFrame containing the price column.
+    :price_column:(float or int): Name of the column with prices in the original currency.
+    conversion_rate (float): Conversion rate from the original currency to the target currency.
+
+    Returns:
+    :pd.DataFrame: DataFrame with an additional column for prices in the target currency.
+    """
+    if not isinstance(conversion_rate, (float, int)):
+        raise TypeError("Conversion rate must be a float or an int.")
+
+    df[f'{price_column}_converted'] = df[price_column] / conversion_rate
+    return df
+
+def drop_columns(df, *args):
+    """
+    Drop specified columns from a DataFrame.
+    
+    Parameters:
+    :df:(pd.DataFrame): DataFrame.
+    :**args: Arbitrary variable length arguments where the values represent the names of columns to drop.
+
+    Returns:
+    :pd.DataFrame: DataFrame with an additional column for prices in the target currency.
+    """
+    try:
+        df = df.drop(columns=list(args), inplace = True)
+        return df 
+    except Exception as e:
+        inspector_gadget.get_log().error(f"drop_columns() unsuccessful, {e}")
+
+def rename_columns(df, **kwargs):
+    '''
+    rename specified columns from a DataFrame.
+
+    Parameters:
+    :df:(pd.DataFrame): DataFrame.
+    :**kwargs: Arbitrary length keyword arguments where the key represent the names of columns and values are the new names of the specified columns.
+
+    Returns:
+    pd.DataFrame: DataFrame with renamed columns.
+    '''
+
+    try:
+        df = df.rename(columns = kwargs, copy = False, inplace = True)
+        return df
+    except Exception as e:
+        inspector_gadget.get_log().error(f"rename_columns() unsuccessful, {e}")
+
+
+
 
 
 def main():

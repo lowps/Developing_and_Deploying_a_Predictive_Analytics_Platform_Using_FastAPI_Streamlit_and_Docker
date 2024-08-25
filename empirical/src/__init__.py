@@ -8,4 +8,7 @@ from src.ii_data_preprocessing import (csv_to_df,
                                        generate_miles_driven_column,
                                        truncate_column_values,
                                        save_processed_data_to_csv)
+from src.ii_data_preprocessing import (convert_currency,
+                                       drop_columns,
+                                       rename_columns)
 
